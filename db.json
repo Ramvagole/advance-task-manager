@@ -1,0 +1,26 @@
+{
+  "posts": [
+    {
+      "id": "804d",
+      "title": "manik",
+      "author": "god",
+      "task": "not completed"
+    },
+    {
+      "id": "c110",
+      "title": "Ram ",
+      "author": "friend",
+      "task": "not completed"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

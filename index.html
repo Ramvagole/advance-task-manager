@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/babel">
+
+    // Your  code will go here
+    function App(){
+        let s={title:"",author:"",task:"not completed"}
+        let [a,setVal]=React.useState([])
+        let [b,setUp]=React.useState(s)
+        let url="http://localhost:3000/posts"
+        React.useEffect(()=>{
+            axios.get(url).then((res)=>setVal(res.data))
+        },[])
+        function clear(v){
+          axios.delete(`http://localhost:3000/posts/${v.id}`).then((res)=>console.log(res))
+            
+        }
+        function update(e){
+          console.log("hello")
+          axios.post(`http://localhost:3000/posts`,b).then((res)=>console.log(res))
+          setUp({title:"",author:""})
+        }
+        return(
+            <>
+            <label>Name:
+              <input type="text" placeholder="name" value={b.name} onChange={(e)=>setUp({...b,[e.target.name]:e.target.value})} name="title"/>
+            </label>
+            <label>Author:
+              <input type="text" placeholder="author" value={b.author} onChange={(e)=>setUp({...b,[e.target.name]:e.target.value})} name="author"/>
+            </label>
+            <button onClick={update}>UPDATE</button>
+            <div style={{display:"flex", gap:"25px"}}>
+              {
+                  a.map((v,i)=>{
+                      return(
+                          <div key={i} style={{border:"1px solid black",width:"250px",textAlign:"center",height:"250px",marginTop:"25px"}}>
+                              <h3>id:{v.id}</h3>
+                              <h1>Title:{v.title}</h1>
+                              <h2>Author:{v.author}</h2>
+                              
+                              <button onClick={()=>{clear(v)}}>DELETE</button>
+                          </div>
+                      )
+                  })
+              }
+            </div>
+            </>
+        )
+    }
+    ReactDOM.render(<App/>,document.getElementById("root"))
+  </script>
+</html>
